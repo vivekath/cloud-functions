@@ -6,6 +6,7 @@ steps:
     - load-data-bigquery
     - --gen2
     - --runtime=python312
+    - --region=asia-south1
     - --source=.
     - --entry-point=load_data_bigquery
 
