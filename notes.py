@@ -1,4 +1,5 @@
 # vivek/working-0.1 vs vivek/created_from_cicd
+"""
 🧠 Key Difference Summary
 Feature	Version 1	Version 2
 Trigger type	HTTP	GCS Event
@@ -7,6 +8,7 @@ event.data	❌	✅
 Cloud Functions Gen2	❌	✅
 Eventarc compatible	❌	✅
 Your deployment	❌ WRONG	✅ CORRECT
+"""
 
 """
 Great question 👍
