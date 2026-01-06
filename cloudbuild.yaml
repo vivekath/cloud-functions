@@ -1,5 +1,5 @@
 steps:
-- name: "gcr.io/cloud-builders/gcloud"
+- name: gcr.io/cloud-builders/gcloud
   args:
     - functions
     - deploy
@@ -9,6 +9,8 @@ steps:
     - --region=asia-south1
     - --source=.
     - --entry-point=load_data_bigquery
+    - --trigger-event-filters=type=google.cloud.storage.object.v1.finalized
+    - --trigger-event-filters=bucket=src-bkt-17122025
 
 options:
   logging: CLOUD_LOGGING_ONLY
