@@ -33,11 +33,7 @@ def load_data_bigquery(event, context=None):
             job_config = bigquery.LoadJobConfig(
                 source_format=bigquery.SourceFormat.CSV,
                 skip_leading_rows=1,
-                autodetect=True,
-                allow_quoted_newlines=True,
-                allow_jagged_rows=True,
-                ignore_unknown_values=True,
-                max_bad_records=10
+                autodetect=True
             )
         elif file_extension == "json":
             job_config = bigquery.LoadJobConfig(
