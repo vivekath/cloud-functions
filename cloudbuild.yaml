@@ -1,6 +1,6 @@
 steps:
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ['functions', 'deploy', 'cf-test-cloudbuild', '--source=.', '--runtime=python3']
+  args: ['functions', 'deploy', 'cf-test-cloudbuild', '--source=.', '--runtime=python312']
 
 options:
   logging: CLOUD_LOGGING_ONLY
