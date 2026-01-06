@@ -1,5 +1,8 @@
 from google.cloud import bigquery 
 
+import os
+
+DATASET_ID = os.environ.get("dataset_id")
 def load_data_bigquery(request):
 
     try:
@@ -7,13 +10,12 @@ def load_data_bigquery(request):
         print(event_data)
 
         # get gcs details
-        bucket_name = event_data['resource']['labels']['bucket_name']
-        resource_path = event_data['protoPayload']['resourceName']
-        file_name = resource_path.split('/objects/')[-1] # sales.csv
+        bucket_name = event_data['bucket']
+        file_name = event_data['name'] # sales.csv
         source_uri = f'gs://{bucket_name}/{file_name}'
 
         # get bq details 
-        dataset_id = 'temp_dataset'
+        dataset_id = DATASET_ID
         table_name = file_name.split('.')[0]+'Table' # salesTable
         table_id = f'{dataset_id}.{table_name}'
 
@@ -54,3 +56,25 @@ def load_data_bigquery(request):
     except Exception as e:
         print(f"Error: {e}")
         return f"Error: {e}"
+    
+"""
+{
+  'kind': 'storage#object',
+  'id': 'src-bkt-17122025/transactions.csv/1767690877811047',
+  'selfLink': 'https://www.googleapis.com/storage/v1/b/src-bkt-17122025/o/transactions.csv',
+  'name': 'transactions.csv',
+  'bucket': 'src-bkt-17122025',
+  'generation': '1767690877811047',
+  'metageneration': '1',
+  'contentType': 'text/csv',
+  'timeCreated': '2026-01-06T09:14:37.816Z',
+  'updated': '2026-01-06T09:14:37.816Z',
+  'storageClass': 'STANDARD',
+  'timeStorageClassUpdated': '2026-01-06T09:14:37.816Z',
+  'size': '296',
+  'md5Hash': 'elUTMjRVo+NoLXFBoQrRow==',
+  'mediaLink': 'https://storage.googleapis.com/download/storage/v1/b/src-bkt-17122025/o/transactions.csv?generation=1767690877811047&alt=media',
+  'crc32c': 'tiKV5g==',
+  'etag': 'COfy4NbJ9pEDEAE='
+}
+"""
