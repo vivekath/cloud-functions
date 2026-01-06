@@ -3,7 +3,7 @@ import os
 
 DATASET_ID = os.environ.get("dataset_id")
 
-def load_data_bigquery(cloud_event):
+def load_data_bigquery(cloud_event, context=None):
     try:
         event_data = cloud_event.data
         print(event_data)
@@ -11,7 +11,6 @@ def load_data_bigquery(cloud_event):
         bucket_name = event_data["bucket"]
         file_name = event_data["name"]
 
-        # Skip folders
         if file_name.endswith("/"):
             return "Skipping folder"
 
@@ -30,13 +29,11 @@ def load_data_bigquery(cloud_event):
                 skip_leading_rows=1,
                 autodetect=True,
             )
-
         elif file_extension == "json":
             job_config = bigquery.LoadJobConfig(
                 source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
                 autodetect=True,
             )
-
         elif file_extension == "parquet":
             job_config = bigquery.LoadJobConfig(
                 source_format=bigquery.SourceFormat.PARQUET,
