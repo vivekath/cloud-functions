@@ -3,14 +3,20 @@ import os
 
 DATASET_ID = os.environ.get("dataset_id")
 
-def load_data_bigquery(cloud_event, context=None):
+def load_data_bigquery(event, context=None):
     try:
-        event_data = cloud_event.data
+        # Handle both CloudEvent and dict
+        if hasattr(event, "data"):
+            event_data = event.data          # CloudEvent
+        else:
+            event_data = event               # dict
+
         print(event_data)
 
         bucket_name = event_data["bucket"]
         file_name = event_data["name"]
 
+        # Skip folders
         if file_name.endswith("/"):
             return "Skipping folder"
 
@@ -55,6 +61,7 @@ def load_data_bigquery(cloud_event, context=None):
     except Exception as e:
         print(e)
         return str(e)
+
     
 """
 {
