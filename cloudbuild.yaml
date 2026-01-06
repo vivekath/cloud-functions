@@ -1,6 +1,13 @@
 steps:
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ['functions', 'deploy', 'cf-test-cloudbuild', '--source=.', '--runtime=python312']
+  args:
+    - functions
+    - deploy
+    - load-data-bigquery
+    - --gen2
+    - --runtime=python312
+    - --source=.
+    - --entry-point=load_data_bigquery
 
 options:
   logging: CLOUD_LOGGING_ONLY
