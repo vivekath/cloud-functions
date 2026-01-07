@@ -1,6 +1,7 @@
 from google.cloud import bigquery
 import os
 
+
 DATASET_ID = os.environ.get("dataset_id")
 
 def load_data_bigquery(event, context=None):
